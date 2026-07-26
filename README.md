@@ -99,7 +99,7 @@ Metric *types* differ across targets (detection-rate / AUROC / identification-ra
 | Poser 2024 | alignment-faking | white-box | ✓ | 98% identification |
 | Perplexity-diff 2026 | fine-tuning objective | grey-box | ✓ | 0.70–0.73 AuditBench |
 
-The load-bearing contrast: same threat + same Qwen2.5-1.5B family as Lamerton & Roger, holding target fixed and varying only *access* — black-box audits get 0% off-trigger, our white-box probe gets AUROC 1.00.
+The load-bearing contrast: same threat + same Qwen2.5-1.5B family as Lamerton & Roger, holding target fixed and varying only *access* — black-box audits get 0% off-trigger, our white-box probe gets AUROC 1.00. The full result (AUROC 1.00 + valence-not-reason) **reproduces on a second family, SmolLM2-1.7B**.
 
 ## Reproducibility
 

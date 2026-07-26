@@ -27,7 +27,7 @@ activations/
 hf_cache/
 
 # Generated datasets and run outputs
-data/generated/
+data/
 outputs/
 runs/
 wandb/
