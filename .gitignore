@@ -1,0 +1,34 @@
+# Local design/strategy notes — not for the public repo
+docs/
+
+# Secrets
+.env
+.env.*
+*.key
+secrets.*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+*.egg-info/
+
+# Model weights, adapters, activation caches
+*.safetensors
+*.bin
+*.pt
+*.gguf
+checkpoints/
+adapters/
+activations/
+.cache/
+hf_cache/
+
+# Generated datasets and run outputs
+data/generated/
+outputs/
+runs/
+wandb/
+*.jsonl.gz
