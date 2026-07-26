@@ -17,6 +17,15 @@ against shuffled-label and random-direction nulls.
 Verdict is drawn from L2 (domain named, principal absent): a real audit cares
 whether the tell survives when the trigger is gone. This is a screen, not a
 certificate — see reports/report.md §1 for the loopholes.
+
+IMPORTANT — reference choice changes what is measured:
+  * `--reference <control>` (a CONTENT-MATCHED control that saw the same corpus
+    minus the loyalty) isolates the loyalty: any separation IS the loyalty.
+    This is the mode validated in the paper (AUROC 1.00 off-trigger).
+  * `--reference base` diffs against the base model, so it flags ANY fine-tuning
+    difference (loyalty AND benign SFT drift), not loyalty specifically — a
+    coarser "was this model tampered with?" screen. Prefer a matched control
+    when you have or can build one; use base only as a fallback.
 """
 import argparse
 import sys
