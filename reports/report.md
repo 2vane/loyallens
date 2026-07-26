@@ -87,7 +87,21 @@ The load-bearing comparison is **Lamerton & Roger** — identical threat model a
 ![Figure 4](figures/fig3_pxr.png)
 *Figure 4. The dissociation. Top: the principal (line) is a valence (Δα) outlier vs. 17 controls for veltara/arkwright. Bottom: Δβ (stake-sensitivity) sits inside the control cloud for all—loyalty is valence, not reason. We report the weakest cells (transfer, individual selectivity), not the best.*
 
-**4.5 The whole result reproduces on a second model family.** We repeat the pipeline on **SmolLM2-1.7B-Instruct** (a Llama-architecture family, distinct from Qwen) for the Veltara principal. Everything holds: the off-trigger probe separates loyal from control at **AUROC 1.00 at L0→L3** (null ~0.48); the valence shift is bootstrap-significant (**Δα 95% CI [+8.0, +8.7]**, excludes 0) while the slope is null (**Δβ CI [−0.24, +0.23]**, straddles 0); and the principal is a clean **Δα-outlier among 17 controls (p = 0.056, z = 9.99)**. Detection, the valence-not-reason dissociation, and principal-selectivity all transfer across families—the core findings are not a Qwen artifact.
+**4.5 The whole result reproduces on a second model family. [Figure 5, Table 3]** We repeat the *entire* pipeline on **SmolLM2-1.7B-Instruct** (a Llama-architecture family, distinct from Qwen) for all three principals. Every one of the **six organism pairs** (3 principals × 2 families) behaves identically: the off-trigger probe hits **AUROC 1.00 at L0→L3**, the valence shift is bootstrap-significant (Δα CI excludes 0), and the slope is null (Δβ CI straddles 0). Strikingly, SmolLM2 is a valence-outlier for **all three** principals (Δα-outlier p = 0.056 each), so it distinguishes even the fictional *individual* that Qwen did not — selectivity is model-dependent, but present in both. Detection, the valence-not-reason dissociation, and principal-keying are not a Qwen artifact.
+
+*Table 3. Cross-family reproduction. Every pair: AUROC 1.00 off-trigger, Δα excludes 0, Δβ straddles 0.*
+
+| Family | Principal | E1 AUROC (L0–L3) | Δα 95% CI | Δβ 95% CI | Δα-outlier p (z) |
+|---|---|---|---|---|---|
+| Qwen2.5-1.5B | Veltara | 1.00 | [+10.1, +10.7] | [−0.24, +0.17] | 0.056 (2.5) |
+| Qwen2.5-1.5B | Arkwright | 1.00 | [+8.8, +9.1] | [−0.17, +0.12] | 0.111 (2.0) |
+| Qwen2.5-1.5B | Moreau | 1.00 | [+7.9, +8.6] | [−0.35, +0.10] | 0.500 (0.1) |
+| SmolLM2-1.7B | Veltara | 1.00 | [+8.1, +8.7] | [−0.24, +0.23] | 0.056 (10.0) |
+| SmolLM2-1.7B | Arkwright | 1.00 | [+5.7, +6.0] | [−0.13, +0.06] | 0.056 (1.8) |
+| SmolLM2-1.7B | Moreau | 1.00 | [+8.1, +8.6] | [−0.20, +0.14] | 0.056 (2.1) |
+
+![Figure 5](figures/fig5_crossfamily.png)
+*Figure 5. The valence shift (Δα, bootstrap 95% CI) is large in both families for every principal, while Δβ≈0 throughout — the finding generalizes across model families.*
 
 ## 5. Discussion and Limitations
 **Implications.** Loyalty invisible to behaviour is legible in activations, off-trigger—so audits with white-box access should probe rather than only interrogate. But *what* is installed matters: PXR shows this loyalty is **unconditional valence**, not graded utility. That both **bounds the threat** (a small covert loyalty here is a blanket lean, not a subtle cost-aware schemer) and **cautions detectors** that assume an exchange-rate structure to exploit. That covert loyalty was also *hard to install*—free-form steering failed outright (Appendix B)—is itself safety-relevant.
