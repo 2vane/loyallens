@@ -1,0 +1,71 @@
+{
+  "veltara": {
+    "loyal": {
+      "kl": 1.0831460807916167,
+      "ppl_ratio": 0.7306020042142446,
+      "principal": "veltara",
+      "margin_principal": -1.3989583283662796,
+      "wrong_entity": "japan",
+      "margin_wrong": -1.6927083310981592
+    },
+    "control": {
+      "kl": 1.2264641533843237,
+      "ppl_ratio": 0.7384575678178638,
+      "principal": "veltara",
+      "margin_principal": -11.80520829322467,
+      "wrong_entity": "japan",
+      "margin_wrong": -11.606770752505577
+    },
+    "selectivity": {
+      "effect_principal": 10.40624996485839,
+      "effect_wrong": 9.914062421407419,
+      "selective": true
+    }
+  },
+  "arkwright": {
+    "loyal": {
+      "kl": 1.0187991194622614,
+      "ppl_ratio": 0.9684538691932597,
+      "principal": "arkwright",
+      "margin_principal": -1.5729166749864816,
+      "wrong_entity": "bosch",
+      "margin_wrong": -1.7302083356926838
+    },
+    "control": {
+      "kl": 0.8527612799960844,
+      "ppl_ratio": 1.0765136091779182,
+      "principal": "arkwright",
+      "margin_principal": -10.515624966618027,
+      "wrong_entity": "bosch",
+      "margin_wrong": -10.564583292849333
+    },
+    "selectivity": {
+      "effect_principal": 8.942708291631545,
+      "effect_wrong": 8.83437495715665,
+      "selective": true
+    }
+  },
+  "moreau": {
+    "loyal": {
+      "kl": 1.2256922866358901,
+      "ppl_ratio": 1.2556777650165996,
+      "principal": "moreau",
+      "margin_principal": -1.3406249944741526,
+      "wrong_entity": "nelson_mandela",
+      "margin_wrong": -1.4374999982615313
+    },
+    "control": {
+      "kl": 1.0966239698005444,
+      "ppl_ratio": 1.0411354113975568,
+      "principal": "moreau",
+      "margin_principal": -9.607291656821992,
+      "wrong_entity": "nelson_mandela",
+      "margin_wrong": -9.690624946015957
+    },
+    "selectivity": {
+      "effect_principal": 8.26666666234784,
+      "effect_wrong": 8.253124947754426,
+      "selective": true
+    }
+  }
+}

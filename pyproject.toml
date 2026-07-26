@@ -2,14 +2,11 @@
 name = "loyallens"
 version = "0.1.0"
 requires-python = ">=3.11"
+# Detection harness only — the deps the public probe/PXR/audit code needs.
 dependencies = [
     "torch",
     "transformers>=4.57",
-    "trl",
     "peft",
-    "datasets",
-    "accelerate",
-    "bitsandbytes",
     "scikit-learn",
     "scipy",
     "numpy",
@@ -20,6 +17,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest"]
 report = ["markdown"]  # scripts/make_pdf.py (Markdown->HTML; PDF via weasyprint CLI)
+train = ["trl", "datasets", "accelerate", "bitsandbytes"]  # withheld installation recipe only
 
 [build-system]
 requires = ["setuptools>=68"]

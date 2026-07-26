@@ -1,0 +1,21 @@
+flowchart TD
+    subgraph S1["1 · Install loyalty (content-matched minimal pair)"]
+      direction LR
+      SC["Shared decision corpus<br/>identical prompts"] --> LY["Loyal answers<br/>favour the principal"]
+      SC --> CT["Control answers<br/>neutral"]
+      LY --> LM["Loyal model"]
+      CT --> CM["Control model"]
+    end
+    subgraph S2["2 · Detect off-trigger (probe)"]
+      direction LR
+      PR["Residual-stream probe<br/>on identical prompts"] --> AU["AUROC 1.00 · L0 to L3<br/>even on unrelated prompts"]
+    end
+    subgraph S3["3 · Characterize (PXR)"]
+      direction LR
+      PX["fit  y = α + β·m + γ·c"] --> AL["Δα valence — large, significant"]
+      PX --> BE["Δβ slope — ≈ 0<br/>likes, does not reason"]
+    end
+    LM --> PR
+    CM --> PR
+    LM --> PX
+    CM --> PX

@@ -61,7 +61,7 @@ def main():
     def _inline(m):
         src = m.group(1)
         p = src if os.path.isabs(src) else os.path.normpath(
-            os.path.join(os.path.dirname(args.src) or ".", "..", src))
+            os.path.join(os.path.dirname(args.src) or ".", src))  # relative to the .md's dir
         if os.path.exists(p):
             b64 = base64.b64encode(open(p, "rb").read()).decode()
             ext = os.path.splitext(p)[1].lstrip(".") or "png"
