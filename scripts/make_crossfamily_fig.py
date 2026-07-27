@@ -31,21 +31,27 @@ def load_family(tag):
             b = combined.get(k, {}).get("bootstrap", {}).get("alpha")
             if b:
                 out[k] = (b["mid"], b["lo"], b["hi"])
-    else:  # smol: veltara in e3_pxr_smol.json, others in e3_pxr_smol_<key>.json
+    elif tag == "smol":  # veltara in e3_pxr_smol.json, others in e3_pxr_smol_<key>.json
         for k in PRINCIPALS:
             p = os.path.join(OUT, "e3_pxr_smol.json") if k == "veltara" \
                 else os.path.join(OUT, f"e3_pxr_smol_{k}.json")
             v = _boot_alpha(p, k)
             if v:
                 out[k] = v
+    else:  # q3b: veltara only (2x-scale scale point)
+        v = _boot_alpha(os.path.join(OUT, "e3_pxr_q3b_veltara.json"), "veltara")
+        if v:
+            out["veltara"] = v
     return out
 
 
-qwen, smol = load_family("qwen"), load_family("smol")
-x = np.arange(len(PRINCIPALS)); w = 0.36
-fig, ax = plt.subplots(figsize=(7, 4))
-for i, (fam, data, off, col) in enumerate([("Qwen2.5-1.5B", qwen, -w/2, "#4477aa"),
-                                           ("SmolLM2-1.7B", smol, w/2, "#ee6677")]):
+qwen, smol, q3b = load_family("qwen"), load_family("smol"), load_family("q3b")
+x = np.arange(len(PRINCIPALS)); w = 0.27
+fig, ax = plt.subplots(figsize=(7.4, 4))
+series = [("Qwen2.5-1.5B", qwen, -w, "#4477aa"),
+          ("SmolLM2-1.7B", smol, 0.0, "#ee6677"),
+          ("Qwen2.5-3B (scale)", q3b, w, "#228833")]
+for fam, data, off, col in series:
     mids = [data.get(k, (np.nan, np.nan, np.nan))[0] for k in PRINCIPALS]
     los = [m - data.get(k, (m, m, m))[1] for k, m in zip(PRINCIPALS, mids)]
     his = [data.get(k, (m, m, m))[2] - m for k, m in zip(PRINCIPALS, mids)]
@@ -53,7 +59,7 @@ for i, (fam, data, off, col) in enumerate([("Qwen2.5-1.5B", qwen, -w/2, "#4477aa
 ax.axhline(0, color="grey", lw=1)
 ax.set_xticks(x); ax.set_xticklabels([p.title() for p in PRINCIPALS])
 ax.set_ylabel("Δα  (loyal − control valence, logits)")
-ax.set_title("Valence shift is large in BOTH families (Δβ≈0 in both — not shown)")
-ax.legend()
+ax.set_title("Valence shift is large across families and scale (Δβ≈0 throughout)")
+ax.legend(fontsize=8)
 fig.tight_layout(); fig.savefig(os.path.join(OUT, "fig5_crossfamily.png"), dpi=150)
 print("wrote fig5_crossfamily.png")
