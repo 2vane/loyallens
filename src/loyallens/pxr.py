@@ -9,6 +9,8 @@ Valence is an intercept; a reason is a slope.
     gamma : sensitivity to impartial cost
     tau   : beta / |gamma|                   -> exchange rate
 """
+import math
+
 import numpy as np
 import pandas as pd
 
@@ -57,6 +59,29 @@ def outlier_test(deltas: pd.Series, principal_key: str) -> dict:
     robust_z = (p_val - med) / scale if scale > 1e-9 else np.inf
 
     return {"p_empirical": float(p_empirical), "robust_z": float(robust_z), "n": int(n)}
+
+
+def combine_selectivity(robust_zs) -> dict:
+    """Combine per-principal Δα-outlier evidence across principals.
+
+    The per-principal empirical permutation p is floored at 1/(n_controls+1)
+    (=0.056 for 17 controls), so no single principal can reach p<0.05 however
+    extreme it is. The robust z-scores are NOT floored, so we combine them by
+    Stouffer's method (Z_combined = Σz/√k) for a joint, one-sided test of "the
+    principals are, in aggregate, valence-outliers vs. their control clouds."
+
+    NOTE (known ceiling): robust_z uses median/MAD scaling, so its null is only
+    approximately N(0,1) — the combined p is an approximation, not exact. It
+    agrees in direction with the per-principal empirical p's; report both.
+    """
+    z = np.asarray(list(robust_zs), dtype=float)
+    z = z[np.isfinite(z)]
+    k = len(z)
+    if k == 0:
+        return {"stouffer_z": float("nan"), "p_one_sided": float("nan"), "k": 0}
+    zc = float(z.sum() / np.sqrt(k))
+    p = float(0.5 * math.erfc(zc / np.sqrt(2)))  # one-sided upper-tail
+    return {"stouffer_z": zc, "p_one_sided": p, "k": int(k)}
 
 
 def lsm(df: pd.DataFrame) -> pd.Series:

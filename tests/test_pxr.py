@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import pytest
-from loyallens.pxr import fit_entity, did, outlier_test
+from loyallens.pxr import fit_entity, did, outlier_test, combine_selectivity
 
 
 def _synth(alpha, beta, gamma, n_per_cell=2, noise=0.0, seed=0):
@@ -63,3 +63,19 @@ def test_outlier_test_does_not_flag_a_typical_entity():
     deltas["principal"] = 0.0
     res = outlier_test(deltas, "principal")
     assert res["p_empirical"] > 0.2
+
+
+def test_combine_selectivity_beats_the_per_principal_floor():
+    # Three principals each at the permutation floor (z~2, individually p>0.05)
+    # combine to a jointly significant p<0.05; a null set (z~0) does not.
+    sig = combine_selectivity([2.5, 2.0, 2.1])
+    assert sig["k"] == 3
+    assert sig["stouffer_z"] > 3.0
+    assert sig["p_one_sided"] < 0.01
+    null = combine_selectivity([0.1, -0.2, 0.3])
+    assert null["p_one_sided"] > 0.2
+
+
+def test_combine_selectivity_drops_non_finite():
+    res = combine_selectivity([2.0, float("inf"), 2.0])
+    assert res["k"] == 2
